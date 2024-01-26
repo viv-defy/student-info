@@ -2,27 +2,18 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
+	"student-info/config"
+	"student-info/handlers"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lpernett/godotenv"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-	port := os.Getenv("PORT")
-
+	config.InitConfig()
 	router := gin.Default()
-	router.GET("/healthcheck", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello, World!",
-		})
-	})
+	router.GET("/healthcheck", handlers.HealthCheck)
 
-	route := fmt.Sprintf(":%v", port)
+	route := fmt.Sprintf(":%v", config.Port)
+	fmt.Printf("port%v\n", route)
 	router.Run(route)
 }
