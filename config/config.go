@@ -13,7 +13,6 @@ var rootDir = "/Users/vishnu/Projects/Go/student-info"
 
 func InitConfig() {
 	envPath := filepath.Join(rootDir, ".env")
-	fmt.Println(envPath)
 	err := godotenv.Load(envPath)
 	if err != nil {
 		fmt.Println("Error loading .env file")

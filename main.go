@@ -11,9 +11,9 @@ import (
 func main() {
 	config.InitConfig()
 	router := gin.Default()
+
 	router.GET("/healthcheck", handlers.HealthCheck)
 
 	route := fmt.Sprintf(":%v", config.Port)
-	fmt.Printf("port%v\n", route)
 	router.Run(route)
 }
