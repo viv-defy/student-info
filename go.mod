@@ -2,7 +2,10 @@ module student-info
 
 go 1.21.5
 
-require github.com/gin-gonic/gin v1.9.1
+require (
+	github.com/gin-gonic/gin v1.9.1
+	github.com/lpernett/godotenv v0.0.0-20230527005122-0de1d4c5ef5e
+)
 
 require (
 	github.com/bytedance/sonic v1.9.1 // indirect
