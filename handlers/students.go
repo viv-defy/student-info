@@ -1,33 +1,113 @@
 package handlers
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+	"strconv"
+	"student-info/db"
+	"student-info/models"
+
+	"github.com/gin-gonic/gin"
+)
 
 func GetAllStudents(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "Hello, World!",
-	})
+	students, err := db.GetAllStudents()
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": "internal server error",
+		})
+	}
+
+	c.JSON(200, students)
 }
 
 func GetStudentByID(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "Hello, World!",
-	})
+	param := c.Param("id")
+	id, err := strconv.Atoi(param)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"message": "invalid id parameter",
+		})
+		return
+	}
+
+	fmt.Printf("Id: %v\n", id)
+	student, err := db.GetStudentByID(id)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": "internal server error",
+		})
+		return
+	}
+
+	c.JSON(200, student)
 }
 
 func CreateStudent(c *gin.Context) {
+	var student models.Student
+	if err := c.ShouldBind(&student); err != nil {
+		c.JSON(400, gin.H{"msg": err})
+		return
+	}
+
+	err := db.CreateStudent(student)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": "internal server error",
+		})
+		return
+	}
+
 	c.JSON(200, gin.H{
-		"message": "Hello, World!",
+		"message": "successfully created the record",
 	})
 }
 
 func UpdateStudent(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "Hello, World!",
-	})
+	param := c.Param("id")
+	id, err := strconv.Atoi(param)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"message": "invalid id parameter",
+		})
+		return
+	}
+
+	var student models.Student
+	if err := c.ShouldBind(&student); err != nil {
+		c.JSON(400, gin.H{"msg": err})
+		return
+	}
+
+	err = db.UpdateStudent(id, student)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": "internal server error",
+		})
+		return
+	}
+
+	c.JSON(200, student)
 }
 
 func DeleteStudent(c *gin.Context) {
+	param := c.Param("id")
+	id, err := strconv.Atoi(param)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"message": "invalid id parameter",
+		})
+		return
+	}
+
+	err = db.DeleteStudent(id)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": "internal server error",
+		})
+		return
+	}
+
 	c.JSON(200, gin.H{
-		"message": "Hello, World!",
+		"message": "successfully deleted the record",
 	})
 }
