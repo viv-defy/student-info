@@ -15,7 +15,7 @@ var Port string
 var rootDir = "/Users/vishnu/Projects/Go/student-info"
 var Db *gorm.DB
 
-func InitConfig() {
+func Init() {
 	envPath := filepath.Join(rootDir, ".env")
 	err := godotenv.Load(envPath)
 	if err != nil {

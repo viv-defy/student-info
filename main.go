@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	config.InitConfig()
+	config.Init()
 	router := gin.Default()
 
 	router.GET("/healthcheck", handlers.HealthCheck)
