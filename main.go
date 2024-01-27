@@ -8,7 +8,10 @@ import (
 
 func main() {
 	config.Init()
-	router := router.GetRouter()
+	router, err := router.GetRouter()
+	if err != nil {
+		return
+	}
 
 	route := fmt.Sprintf(":%v", config.Port)
 	router.Run(route)
