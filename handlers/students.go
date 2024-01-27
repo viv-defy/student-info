@@ -58,7 +58,7 @@ func CreateStudent(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{
-		"message": "successfully created the record",
+		"message": "success",
 	})
 }
 
@@ -108,6 +108,6 @@ func DeleteStudent(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{
-		"message": "successfully deleted the record",
+		"message": "success",
 	})
 }
