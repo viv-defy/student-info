@@ -12,12 +12,18 @@ import (
 )
 
 var Port string
-var rootDir = "/Users/vishnu/Projects/Go/student-info"
+var RootDir string
 var Db *gorm.DB
 
 func Init() {
-	envPath := filepath.Join(rootDir, ".env")
-	err := godotenv.Load(envPath)
+	RootDir, err := os.Getwd()
+	if err != nil {
+		fmt.Println("Error getting the current directory")
+	}
+	fmt.Println("Current Working Directory: ", RootDir)
+
+	envPath := filepath.Join(RootDir, ".env")
+	err = godotenv.Load(envPath)
 	if err != nil {
 		fmt.Println("Error loading .env file")
 	}
