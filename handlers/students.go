@@ -43,13 +43,13 @@ func GetStudentByID(c *gin.Context) {
 }
 
 func CreateStudent(c *gin.Context) {
-	var student models.Student
-	if err := c.ShouldBind(&student); err != nil {
+	var students []*models.Student
+	if err := c.ShouldBind(&students); err != nil {
 		c.JSON(400, gin.H{"msg": err})
 		return
 	}
 
-	err := db.CreateStudent(student)
+	err := db.CreateStudent(students)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"message": "internal server error",

@@ -18,11 +18,13 @@ func GetStudentByID(id int) (models.Student, error) {
 	return student, result.Error
 }
 
-func CreateStudent(student models.Student) error {
-	student.CreatedAt = time.Now()
-	student.UpdatedAt = time.Now()
+func CreateStudent(students []*models.Student) error {
+	for _, student := range students {
+		student.CreatedAt = time.Now()
+		student.UpdatedAt = time.Now()
+	}
 
-	result := config.Db.Create(&student)
+	result := config.Db.Create(students)
 	return result.Error
 }
 
